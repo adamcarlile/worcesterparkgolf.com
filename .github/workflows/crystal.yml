@@ -8,10 +8,16 @@ on:
 
 jobs:
   build:
+    strategy:
+      matrix:
+        crystal-version: ['1.17.1', 'latest']
 
     runs-on: ubuntu-latest
     steps:
-    - uses: crystal-lang/install-crystal@v1
+    - name: "Set up Crystal ${{ matrix.crystal-version }}"
+      uses: crystal-lang/install-crystal@v1
+      with:
+        crystal: ${{ matrix.crystal-version }}
     - uses: actions/checkout@v4
     - name: Run test
       run: crystal eval "puts 1337"
